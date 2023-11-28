@@ -1,7 +1,6 @@
 {
   "name": "tasky-api",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "babel-node index.js",
@@ -19,5 +18,6 @@
   "dependencies": {
     "dotenv": "^16.3.1",
     "express": "^4.18.2"
-  }
+  },
+  "description": ""
 }
