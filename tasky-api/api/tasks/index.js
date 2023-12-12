@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
     res.json(tasksData);
 });
 
-//Add a task
+// Add a task
 router.post('/', (req, res) => {
     const { title, description, deadline, priority, done } = req.body;
     const newTask = {
@@ -17,31 +17,33 @@ router.post('/', (req, res) => {
         description,
         deadline,
         priority,
-        done
+        done,
+        createdAt: new Date().toISOString(), // Fixed method call
+        updatedAt: new Date().toISOString(), // Fixed property name
     };
     tasksData.tasks.push(newTask);
     res.status(201).json(newTask);
     tasksData.total_results++;
 });
 
-//Update an existing task
+// Update an existing task
 router.put('/:id', (req, res) => {
     const { id } = req.params;
     const taskIndex = tasksData.tasks.findIndex(task => task.id === id); 
     if (taskIndex === -1) {
         return res.status(404).json({ status: 404, message: 'Task not found' });
     }
-    const updatedTask = { ...tasksData.tasks[taskIndex], ...req.body, id:id };
+    const updatedTask = {...tasksData.tasks[taskIndex], ...req.body, updatedAt: new Date().toISOString()}; // Fixed method call and property name
     tasksData.tasks[taskIndex] = updatedTask;
     res.json(updatedTask);
 });
 
-//Delete a task
+// Delete a task
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
     const taskIndex = tasksData.tasks.findIndex(task => task.id === id);
     
-    if (taskIndex === -1) return res.status(404).json({status:404,message:'Task not found'});
+    if (taskIndex === -1) return res.status(404).json({status:404, message: 'Task not found'});
     tasksData.tasks.splice(taskIndex, 1);
     res.status(204).send();
     tasksData.total_results--;
