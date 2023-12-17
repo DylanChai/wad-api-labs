@@ -17,6 +17,10 @@ const UserSchema = new Schema({
   }
 });
 
+UserSchema.methods.comparePassword = async function (passw) { 
+  return await bcrypt.compare(passw, this.password); 
+}
+
 // Hash password before saving
 UserSchema.pre('save', async function(next) {
   if (this.isModified('password') || this.isNew) {
@@ -25,10 +29,6 @@ UserSchema.pre('save', async function(next) {
   }
   next();
 });
-
-UserSchema.methods.comparePassword = async function (passw) { 
-  return await bcrypt.compare(passw, this.password); 
-}
 
 UserSchema.statics.findByUserName = function (username) {
   return this.findOne({ username: username });
