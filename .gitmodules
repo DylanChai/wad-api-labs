@@ -1,0 +1,3 @@
+[submodule "wad-api-labs"]
+	path = wad-api-labs
+	url = https://github.com/DylanChai/react-movie-labs
